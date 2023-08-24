@@ -18,7 +18,6 @@ export const Movie = (props) => {
             <Card.Title className="movie-title">{title}</Card.Title>
             <Card.Text className="movie-info">Length: {length} minutes</Card.Text>
             <Card.Text className="movie-info">Categories: {categories.join(', ')}</Card.Text>
-            <Card.Text className="movie-info">Date: {date}</Card.Text>
           </Card.Body>
         </div>
       </div>
