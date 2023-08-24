@@ -1,0 +1,40 @@
+
+
+.movie-card {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+  
+.card-content {
+    display: flex;
+    align-items: center;
+}
+  
+.poster-container {
+    flex: 0 0 auto;
+    padding: 20px;
+}
+  
+.movie-details {
+    flex: 1 1 auto;
+    padding: 20px;
+}
+  
+.movie-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+  
+.movie-info {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+  
+.movie-poster {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
