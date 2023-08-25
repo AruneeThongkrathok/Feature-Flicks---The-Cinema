@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/SortingMovies.css";
 
 const SortingMovies = ({ selectedSorting, onSortChange }) => {
   const handleSortChange = (event) => {
