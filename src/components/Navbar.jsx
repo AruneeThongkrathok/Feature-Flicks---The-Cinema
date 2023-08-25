@@ -25,21 +25,28 @@ const Navbar = ({ movies }) => {
   return (
     <nav className="navbar">
       <h1>Future Flicks Cinema</h1>
-      <NavDropdown
-        title="Categories"
-        id="categories-dropdown"
-        show={isDropdownOpen}
-        onToggle={handleDropdownToggle}
-      >
-        {categories.map((category, index) => (
-          <NavDropdown.Item
-            key={index}
-            onClick={() => handleCategorySelect(category)}
-          >
-            {category}
-          </NavDropdown.Item>
-        ))}
-      </NavDropdown>
+      <div className="nav-dropdown-container">
+        <div
+          className={`nav-link ${isDropdownOpen ? "active" : ""}`}
+          onClick={handleDropdownToggle}
+        >
+          Categories
+          <div className="dropdown-arrow"></div>
+        </div>
+        {isDropdownOpen && (
+          <div className="nav-dropdown">
+            {categories.map((category, index) => (
+              <div
+                key={index}
+                className="nav-dropdown-item"
+                onClick={() => handleCategorySelect(category)}
+              >
+                {category}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
       <CategoryFilter movies={movies} selectedCategory={selectedCategory} />
     </nav>
   );
