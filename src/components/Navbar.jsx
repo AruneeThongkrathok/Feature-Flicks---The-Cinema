@@ -3,45 +3,42 @@ import { NavDropdown } from "react-bootstrap";
 import "../css/Navbar.css";
 
 const Navbar = ({ movies }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const categories = [
     "All",
     ...new Set(movies.flatMap((movie) => movie.description.categories)),
   ];
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setDropdownOpen(false);
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  const handleCategorySelect = (category) => {
+    // Handle category selection here
+    console.log("Selected category:", category);
+    setIsDropdownOpen(false); // Close the dropdown
+    // You can add more logic to filter movies based on the selected category
   };
 
   return (
     <nav className="navbar">
       <h1>Future Flicks Cinema</h1>
-      <div className={`dropdown ${dropdownOpen ? "open" : ""}`}>
-        <button
-          className="dropdown-toggle"
-          type="button"
-          onClick={toggleDropdown}
-        >
-          Categories
-        </button>
-        <ul className="dropdown-menu">
-          {categories.map((category) => (
-            <li
-              key={category}
-              onClick={() => handleCategoryChange(category)}
-              className={selectedCategory === category ? "active" : ""}
-            >
-              {category}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <NavDropdown
+        title="Categories"
+        id="categories-dropdown"
+        show={isDropdownOpen}
+        onToggle={handleDropdownToggle}
+      >
+        {categories.map((category, index) => (
+          <NavDropdown.Item
+            key={index}
+            onClick={() => handleCategorySelect(category)}
+          >
+            {category}
+          </NavDropdown.Item>
+        ))}
+      </NavDropdown>
     </nav>
   );
 };
