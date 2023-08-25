@@ -3,7 +3,7 @@ import { NavDropdown } from "react-bootstrap";
 import "../css/Navbar.css";
 import CategoryFilter from "./CategoryFilter";
 
-const Navbar = ({ movies, onSelectCategory }) => {
+const Navbar = ({ movies }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
