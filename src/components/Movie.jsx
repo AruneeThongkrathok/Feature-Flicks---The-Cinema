@@ -4,7 +4,7 @@ import "../css/Movie.css";
 import { Link } from "react-router-dom";
 
 export const Movie = (props) => {
-  const { title, description, date } = props;
+  const { title, description, selectedCategory } = props;
   const { posterImage, length, categories } = description;
   const posterImageURL = "https://cinema-rest.nodehill.se/" + posterImage;
 
@@ -26,7 +26,10 @@ export const Movie = (props) => {
                 Length: {length} minutes
               </Card.Text>
               <Card.Text className="movie-info">
-                Categories: {categories.join(", ")}
+                Categories:{" "}
+                {selectedCategory === "All"
+                  ? categories.join(", ")
+                  : selectedCategory}
               </Card.Text>
             </Card.Body>
           </div>

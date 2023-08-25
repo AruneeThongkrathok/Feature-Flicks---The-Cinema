@@ -5,18 +5,33 @@ import Movie from "./components/Movie";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     (async () => {
-      setMovies(await (await fetch("/api/movies")).json());
+      const moviesData = await (await fetch("/api/movies")).json();
+
+      if (selectedCategory === "All") {
+        setMovies(moviesData);
+      } else {
+        const filteredMovies = moviesData.filter((movie) =>
+          movie.description.categories.includes(selectedCategory)
+        );
+        setMovies(filteredMovies);
+      }
     })();
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar movies={movies} />
       {movies.map(({ id, title, description }) => (
-        <Movie key={id} title={title} description={description} />
+        <Movie
+          key={id}
+          title={title}
+          description={description}
+          selectedCategory={selectedCategory}
+        />
       ))}
     </div>
   );
