@@ -22,6 +22,8 @@ const Navbar = ({ movies }) => {
     setIsDropdownOpen(false);
   };
 
+  const sortedCategories = categories.slice().sort();
+
   return (
     <nav className="navbar">
       <h1>Future Flicks Cinema</h1>
@@ -35,7 +37,7 @@ const Navbar = ({ movies }) => {
         </div>
         {isDropdownOpen && (
           <div className="nav-dropdown">
-            {categories.map((category, index) => (
+            {sortedCategories.map((category, index) => (
               <div
                 key={index}
                 className="nav-dropdown-item"
