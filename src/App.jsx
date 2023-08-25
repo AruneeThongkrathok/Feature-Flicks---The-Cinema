@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <Navbar movies={movies} />
+      <Navbar movies={movies} onSelectCategory={setSelectedCategory} />
       {movies.map(({ id, title, description }) => (
         <Movie
           key={id}

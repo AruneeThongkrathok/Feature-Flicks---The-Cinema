@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { NavDropdown } from "react-bootstrap";
 import "../css/Navbar.css";
+import CategoryFilter from "./CategoryFilter";
 
-const Navbar = ({ movies }) => {
+const Navbar = ({ movies, onSelectCategory }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = [
     "All",
@@ -15,10 +17,9 @@ const Navbar = ({ movies }) => {
   };
 
   const handleCategorySelect = (category) => {
-    // Handle category selection here
     console.log("Selected category:", category);
-    setIsDropdownOpen(false); // Close the dropdown
-    // You can add more logic to filter movies based on the selected category
+    setSelectedCategory(category);
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -39,6 +40,7 @@ const Navbar = ({ movies }) => {
           </NavDropdown.Item>
         ))}
       </NavDropdown>
+      <CategoryFilter movies={movies} selectedCategory={selectedCategory} />
     </nav>
   );
 };
