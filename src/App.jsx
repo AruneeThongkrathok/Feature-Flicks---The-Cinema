@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedSorting, setSelectedSorting] = useState("default");
 
   useEffect(() => {
     (async () => {
@@ -15,13 +16,26 @@ export default function App() {
           movie.description.categories.includes(selectedCategory)
         );
       }
-      setMovies(filteredMovies);
+
+      let sortedMovies = [...filteredMovies];
+      if (selectedSorting === "az") {
+        sortedMovies.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (selectedSorting === "za") {
+        sortedMovies.sort((a, b) => b.title.localeCompare(a.title));
+      }
+
+      setMovies(sortedMovies);
     })();
-  }, [selectedCategory]);
+  }, [selectedCategory, selectedSorting]);
 
   return (
     <div className="App">
-      <Navbar movies={movies} onSelectCategory={setSelectedCategory} />
+      <Navbar
+        movies={movies}
+        onSelectCategory={setSelectedCategory}
+        onSortChange={setSelectedSorting}
+        selectedSorting={selectedSorting}
+      />
     </div>
   );
 }

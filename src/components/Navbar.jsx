@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { NavDropdown } from "react-bootstrap";
 import "../css/Navbar.css";
 import CategoryFilter from "./CategoryFilter";
+import SortingMovies from "./SortingMovies";
 
-const Navbar = ({ movies }) => {
+const Navbar = ({ movies, onSortChange, selectedSorting }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -49,6 +50,11 @@ const Navbar = ({ movies }) => {
           </div>
         )}
       </div>
+      <SortingMovies
+        movies={movies}
+        selectedSorting={selectedSorting}
+        onSortChange={onSortChange}
+      />
       <CategoryFilter movies={movies} selectedCategory={selectedCategory} />
     </nav>
   );
