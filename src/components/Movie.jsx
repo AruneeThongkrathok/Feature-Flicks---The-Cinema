@@ -4,7 +4,7 @@ import "../css/Movie.css";
 import { Link } from "react-router-dom";
 
 export const Movie = (props) => {
-  const { title, description, selectedCategory, onCategoryChange } = props;
+  const { title, description, selectedCategory } = props;
   const { posterImage, length, categories } = description;
   const posterImageURL = "https://cinema-rest.nodehill.se/" + posterImage;
 
@@ -27,7 +27,7 @@ export const Movie = (props) => {
                 {categories.map((category, index) => (
                   <span
                     key={index}
-                    className={`category ${
+                    className={`movie-category ${
                       selectedCategory === category ? "selected" : ""
                     }`}
                   >

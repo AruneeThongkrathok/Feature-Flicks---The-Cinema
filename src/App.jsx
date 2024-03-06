@@ -3,47 +3,56 @@ import MyNavbar from "./components/MyNavbar";
 import Movie from "./components/Movie";
 
 export default function App() {
-  const [movies, setMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [displayedMovies, setDisplayedMovies] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSorting, setSelectedSorting] = useState("default");
 
   useEffect(() => {
     (async () => {
       const moviesData = await (await fetch("/api/movies")).json();
-      let filteredMovies = moviesData;
-
-      if (selectedCategory !== "All") {
-        filteredMovies = moviesData.filter((movie) =>
-          movie.description.categories.includes(selectedCategory)
-        );
-      }
-
-      let sortedMovies = [...filteredMovies];
-      if (selectedSorting === "az") {
-        sortedMovies.sort((a, b) => a.title.localeCompare(b.title));
-      } else if (selectedSorting === "za") {
-        sortedMovies.sort((a, b) => b.title.localeCompare(a.title));
-      }
-
-      setMovies(sortedMovies);
+      setAllMovies(moviesData);
+      updateDisplayedMovies(moviesData, selectedCategory, selectedSorting);
     })();
   }, [selectedCategory, selectedSorting]);
 
+  const updateDisplayedMovies = (moviesData, category, sorting) => {
+    let filteredMovies = moviesData;
+    if (category !== "All") {
+      filteredMovies = moviesData.filter((movie) =>
+        movie.description.categories.includes(category)
+      );
+    }
+
+    let sortedMoviesCopy = [...filteredMovies];
+    if (sorting === "az") {
+      sortedMoviesCopy.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sorting === "za") {
+      sortedMoviesCopy.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    setDisplayedMovies(sortedMoviesCopy);
+  };
+
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    updateDisplayedMovies(allMovies, category, selectedSorting);
     console.log("In App Clicked category:", category);
   };
 
   return (
     <div className="App">
       <MyNavbar
-        movies={movies}
+        movies={allMovies}
+        categories={Array.from(
+          new Set(allMovies.flatMap((movie) => movie.description.categories))
+        )}
         onSelectCategory={handleCategoryChange}
         onSortChange={setSelectedSorting}
         selectedSorting={selectedSorting}
       />
       <div className="movie-list">
-        {movies.map((movie) => (
+        {displayedMovies.map((movie) => (
           <Movie
             key={movie.id}
             id={movie.id}

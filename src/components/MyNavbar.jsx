@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { Dropdown } from "react-bootstrap";
 import "../css/Navbar.css";
 import SortingMovies from "./SortingMovies";
 import CategoryFilter from "./CategoryFilter";
 
-const Navbar = ({
+const MyNavbar = ({
   movies,
   onSortChange,
   onSelectCategory,
+  selectedCategory,
   selectedSorting,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -15,8 +17,7 @@ const Navbar = ({
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleCategorySelect = (category) => {
-    console.log("Selected category:", category);
+  const handleCategoryClick = (category) => {
     onSelectCategory(category);
     setIsDropdownOpen(false);
   };
@@ -24,25 +25,29 @@ const Navbar = ({
   return (
     <nav className="navbar">
       <h1>Future Flicks Cinema</h1>
-      <div className="nav-dropdown-container">
-        <div
-          className={`nav-link ${isDropdownOpen ? "active" : ""}`}
-          onClick={handleDropdownToggle}
+      <Dropdown
+        show={isDropdownOpen}
+        onToggle={handleDropdownToggle}
+        className="nav-dropdown-container"
+      >
+        <Dropdown.Toggle
+          className="category-button"
+          variant="light"
+          id="dropdown-basic"
         >
           Categories
-          <div className="dropdown-arrow"></div>
-        </div>
-        {isDropdownOpen && (
-          <div className="nav-dropdown">
-            {movies &&
-              movies.length > 0 &&
-              CategoryFilter({
-                movies,
-                onSelectCategory: handleCategorySelect,
-              })}
-          </div>
-        )}
-      </div>
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="nav-dropdown">
+          {movies && movies.length > 0 && (
+            <CategoryFilter
+              className="category"
+              movies={movies}
+              selectedCategory={selectedCategory}
+              onSelectCategory={handleCategoryClick}
+            />
+          )}
+        </Dropdown.Menu>
+      </Dropdown>
       <SortingMovies
         movies={movies}
         selectedSorting={selectedSorting}
@@ -52,4 +57,4 @@ const Navbar = ({
   );
 };
 
-export default Navbar;
+export default MyNavbar;
