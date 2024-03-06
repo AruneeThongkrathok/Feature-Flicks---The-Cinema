@@ -4,7 +4,7 @@ import "../css/Movie.css";
 import { Link } from "react-router-dom";
 
 export const Movie = (props) => {
-  const { title, description, selectedCategory } = props;
+  const { title, description, selectedCategory, onCategoryChange } = props;
   const { posterImage, length, categories } = description;
   const posterImageURL = "https://cinema-rest.nodehill.se/" + posterImage;
 
@@ -22,12 +22,18 @@ export const Movie = (props) => {
           <div className="movie-details">
             <Card.Body>
               <Card.Title className="movie-title">{title}</Card.Title>
-              <Card.Text className="movie-info">Length: {length} min</Card.Text>
               <Card.Text className="movie-info">
                 Categories:{" "}
-                {selectedCategory === "All"
-                  ? categories.join(", ")
-                  : selectedCategory}
+                {categories.map((category, index) => (
+                  <span
+                    key={index}
+                    className={`category ${
+                      selectedCategory === category ? "selected" : ""
+                    }`}
+                  >
+                    {category}
+                  </span>
+                ))}
               </Card.Text>
             </Card.Body>
           </div>

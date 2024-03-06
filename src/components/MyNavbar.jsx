@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { NavDropdown } from "react-bootstrap";
 import "../css/Navbar.css";
-import CategoryFilter from "./CategoryFilter";
 import SortingMovies from "./SortingMovies";
+import CategoryFilter from "./CategoryFilter";
 
-const Navbar = ({ movies, onSortChange, selectedSorting }) => {
+const Navbar = ({
+  movies,
+  onSortChange,
+  onSelectCategory,
+  selectedSorting,
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const categories = [
-    "All",
-    ...new Set(movies.flatMap((movie) => movie.description.categories)),
-  ];
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -19,11 +17,9 @@ const Navbar = ({ movies, onSortChange, selectedSorting }) => {
 
   const handleCategorySelect = (category) => {
     console.log("Selected category:", category);
-    setSelectedCategory(category);
+    onSelectCategory(category);
     setIsDropdownOpen(false);
   };
-
-  const sortedCategories = categories.slice().sort();
 
   return (
     <nav className="navbar">
@@ -38,15 +34,12 @@ const Navbar = ({ movies, onSortChange, selectedSorting }) => {
         </div>
         {isDropdownOpen && (
           <div className="nav-dropdown">
-            {sortedCategories.map((category, index) => (
-              <div
-                key={index}
-                className="nav-dropdown-item"
-                onClick={() => handleCategorySelect(category)}
-              >
-                {category}
-              </div>
-            ))}
+            {movies &&
+              movies.length > 0 &&
+              CategoryFilter({
+                movies,
+                onSelectCategory: handleCategorySelect,
+              })}
           </div>
         )}
       </div>
@@ -55,7 +48,6 @@ const Navbar = ({ movies, onSortChange, selectedSorting }) => {
         selectedSorting={selectedSorting}
         onSortChange={onSortChange}
       />
-      <CategoryFilter movies={movies} selectedCategory={selectedCategory} />
     </nav>
   );
 };

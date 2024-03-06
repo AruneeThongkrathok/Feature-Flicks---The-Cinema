@@ -10,7 +10,7 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/Bookmovie" element={<Bookmovie />} />{" "}
+        <Route path="/Bookmovie/:movieId" element={<Bookmovie />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

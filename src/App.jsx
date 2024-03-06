@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
+import MyNavbar from "./components/MyNavbar";
+import Movie from "./components/Movie";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -28,14 +29,30 @@ export default function App() {
     })();
   }, [selectedCategory, selectedSorting]);
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    console.log("In App Clicked category:", category);
+  };
+
   return (
     <div className="App">
-      <Navbar
+      <MyNavbar
         movies={movies}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={handleCategoryChange}
         onSortChange={setSelectedSorting}
         selectedSorting={selectedSorting}
       />
+      <div className="movie-list">
+        {movies.map((movie) => (
+          <Movie
+            key={movie.id}
+            id={movie.id}
+            title={movie.title}
+            description={movie.description}
+            selectedCategory={selectedCategory}
+          />
+        ))}
+      </div>
     </div>
   );
 }
