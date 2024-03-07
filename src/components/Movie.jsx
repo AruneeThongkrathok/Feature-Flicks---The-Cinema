@@ -1,15 +1,21 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import "../css/Movie.css";
 import { Link } from "react-router-dom";
+import "../css/Movie.css";
 
-export const Movie = (props) => {
-  const { title, description, selectedCategory } = props;
+const Movie = (props) => {
+  console.log("Movie props:", props);
+  const { id, title, description, selectedCategory } = props;
   const { posterImage, length, categories } = description;
   const posterImageURL = "https://cinema-rest.nodehill.se/" + posterImage;
 
   return (
-    <Link to="/BookMovie">
+    <Link
+      to={{
+        pathname: `/BookMovie/${id}`,
+        state: { movieDetails: props },
+      }}
+    >
       <Card className="movie-card">
         <div className="card-content">
           <div className="poster-container">
