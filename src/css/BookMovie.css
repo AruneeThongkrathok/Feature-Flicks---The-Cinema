@@ -1,0 +1,35 @@
+.Movie-screening-card {
+    max-width: 800px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+  
+.Movie-info-card {
+    border: none;
+}
+  
+.Movie-info-card .card-img-top {
+    border-radius: 10px 10px 0 0;
+}
+  
+.Movie-info-card .card-body {
+    padding: 20px;
+}
+  
+.book-button {
+    margin-top: 10px;
+    font-size: 10px;
+    height: 40px;
+    width: 80px;
+    margin-bottom: 10px;
+
+}
+.screening-col {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 16px;
+}
