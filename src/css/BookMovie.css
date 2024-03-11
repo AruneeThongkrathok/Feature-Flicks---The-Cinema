@@ -3,15 +3,19 @@
     margin: 20px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 10px
 }
   
 .Movie-info-card {
     border: none;
+    text-align: center;
+    align-items: center;
 }
   
 .Movie-info-card .card-img-top {
     border-radius: 10px 10px 0 0;
+    max-height: 500px;
+    max-width: 350px;
 }
   
 .Movie-info-card .card-body {
@@ -20,16 +24,42 @@
   
 .book-button {
     margin-top: 10px;
-    font-size: 10px;
-    height: 40px;
-    width: 80px;
-    margin-bottom: 10px;
-
+    font-size: 14px;
+    max-height: 30px;
+    max-width: 65px;
+    background-color: #3f3e3e;
+    border: none;
 }
+
+.book-button:hover {
+    background-color: #6d6b6b;
+}
+
 .screening-col {
     padding: 20px;
     display: flex;
     flex-direction: column;
     text-align: center;
     font-size: 16px;
+}
+
+.screening-col h2 {
+    margin-bottom: 50px;
+    color: #3f3e3e;
+}
+
+body {
+    background-color: #3c3b3b;
+    margin: 0;
+}
+
+.Movie-info-card .card-text {
+    display: flex;
+    gap: 5px;
+    font-size: 15px;
+    justify-content: center;
+}
+.Movie-info-card .card-title {
+    font-size: 25px;
+    color: #3f3e3e;
 }

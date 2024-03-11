@@ -9,7 +9,7 @@ const Bookmovie = () => {
 
   const { movieDetails } = location.state || {};
   const { id, title, description, selectedCategory } = movieDetails || {};
-  const { categories, posterImage } = description || {};
+  const { categories, length, posterImage } = description || {};
   const [screenings, setScreenings] = useState([]);
   const [auditoriums, setAuditoriums] = useState([]);
   const [selectedScreening, setSelectedScreening] = useState(null);
@@ -81,45 +81,50 @@ const Bookmovie = () => {
               />
               <Card.Body>
                 <Card.Title>{title}</Card.Title>
-                <Card.Text>{categories}</Card.Text>
+                <Card.Text>
+                  {Array.isArray(categories)
+                    ? categories.map((category, index) => (
+                        <span key={index}>{category.trim()}</span>
+                      ))
+                    : typeof categories === "string"
+                    ? categories
+                        .split(",")
+                        .map((category, index) => (
+                          <span key={index}>{category.trim()}</span>
+                        ))
+                    : null}
+                </Card.Text>
+                <Card.Text>Duration: {length} minutes</Card.Text>
               </Card.Body>
             </Card>
           </Col>
           <Col className="screening-col" md={6}>
             <h2>Screenings:</h2>
-            <ul>
-              {screenings.map((screening) => (
-                <li key={screening.id} className="d-flex">
-                  <div>
-                    <p>
-                      {formatDateTime(screening.time)} -{" "}
-                      {getAuditoriumName(screening.auditoriumId)}
-                    </p>
-                  </div>
-                  <div>
-                    <Button
-                      className="book-button"
-                      variant="primary"
-                      onClick={() => handleChooseSeats(screening)}
-                    >
-                      Choose Seats
-                    </Button>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            {screenings.map((screening) => (
+              <Card key={screening.id} className="mb-3">
+                <Card.Body>
+                  <Row className="d-flex align-items-center">
+                    <Col md={8}>
+                      <p>
+                        {formatDateTime(screening.time)} -{" "}
+                        {getAuditoriumName(screening.auditoriumId)}
+                      </p>
+                    </Col>
+                    <Col md={4} className="text-md-right">
+                      <Button
+                        className="book-button"
+                        variant="primary"
+                        onClick={() => handleChooseSeats(screening)}
+                      >
+                        Book
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            ))}
           </Col>
         </Row>
-        {selectedScreening && (
-          <div>
-            <h3>Selected Screening Information:</h3>
-            <p>
-              Time: {formatDateTime(selectedScreening.time)}
-              <br />
-              Auditorium: {getAuditoriumName(selectedScreening.auditoriumId)}
-            </p>
-          </div>
-        )}
       </Card>
     </div>
   );
