@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { Card, Button, Row, Col } from "react-bootstrap";
 
 const Bookmovie = () => {
   const { movieId } = useParams();
@@ -8,7 +9,6 @@ const Bookmovie = () => {
   const { movieDetails } = location.state || {};
   const { id, title, description, selectedCategory } = movieDetails || {};
   const { categories, posterImage } = description || {};
-  const [ticketTypes, setTicketTypes] = useState([]);
   const [screenings, setScreenings] = useState([]);
   const [auditoriums, setAuditoriums] = useState([]);
 
@@ -17,16 +17,6 @@ const Bookmovie = () => {
   }
 
   useEffect(() => {
-    const fetchTicketTypes = async () => {
-      try {
-        const response = await fetch("/api/ticketTypes");
-        const ticketTypesData = await response.json();
-        setTicketTypes(ticketTypesData);
-      } catch (error) {
-        console.error("Error fetching ticket types:", error);
-      }
-    };
-
     const fetchScreenings = async () => {
       try {
         const response = await fetch("/api/screenings");
@@ -50,7 +40,6 @@ const Bookmovie = () => {
       }
     };
 
-    fetchTicketTypes();
     fetchScreenings();
     fetchAuditoriums();
   }, [movieId]);
@@ -60,35 +49,60 @@ const Bookmovie = () => {
     return auditorium ? auditorium.name : "Unknown Auditorium";
   };
 
+  const handleChooseSeats = (screeningId) => {
+    console.log("Choose seats for screening:", screeningId);
+  };
+
+  const formatDateTime = (dateTime) => {
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateTime)
+      .toLocaleString(undefined, options)
+      .replace(",", "");
+  };
+
   return (
     <div>
-      <h1>Movie ID: {id}</h1>
-      <p>Title: {title}</p>
-      <p>Category: {categories}</p>
-      <img
-        src={`https://cinema-rest.nodehill.se/${posterImage}`}
-        alt={title}
-        style={{ maxWidth: "100%" }}
-      />
-
-      <h2>Ticket Types:</h2>
-      <ul>
-        {ticketTypes.map((type) => (
-          <li key={type.id}>
-            {type.name} - ${type.price}
-          </li>
-        ))}
-      </ul>
-
-      <h2>Screenings:</h2>
-      <ul>
-        {screenings.map((screening) => (
-          <li key={screening.id}>
-            {new Date(screening.time).toLocaleString()} -{" "}
-            {getAuditoriumName(screening.auditoriumId)}
-          </li>
-        ))}
-      </ul>
+      <Card>
+        <Row>
+          <Col md={6}>
+            <Card>
+              <Card.Img
+                variant="top"
+                src={`https://cinema-rest.nodehill.se/${posterImage}`}
+              />
+              <Card.Body>
+                <Card.Title>{title}</Card.Title>
+                <Card.Text>Category: {categories}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={6}>
+            <h2>Screenings:</h2>
+            <ul>
+              {screenings.map((screening) => (
+                <li key={screening.id}>
+                  <p>
+                    {formatDateTime(screening.time)} -{" "}
+                    {getAuditoriumName(screening.auditoriumId)}
+                  </p>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleChooseSeats(screening.id)}
+                  >
+                    Choose Seats
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </Col>
+        </Row>
+      </Card>
     </div>
   );
 };
