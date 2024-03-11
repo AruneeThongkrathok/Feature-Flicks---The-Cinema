@@ -9,6 +9,7 @@ const Bookmovie = () => {
   const { id, title, description, selectedCategory } = movieDetails || {};
   const { categories, posterImage } = description || {};
   const [ticketTypes, setTicketTypes] = useState([]);
+  const [screenings, setScreenings] = useState([]);
 
   if (!id || !title || !description || !selectedCategory) {
     return <div>No movie details available</div>;
@@ -25,8 +26,22 @@ const Bookmovie = () => {
       }
     };
 
+    const fetchScreenings = async () => {
+      try {
+        const response = await fetch("/api/screenings");
+        const screeningsData = await response.json();
+        const movieScreenings = screeningsData.filter(
+          (screening) => screening.movieId === parseInt(movieId, 10)
+        );
+        setScreenings(movieScreenings);
+      } catch (error) {
+        console.error("Error fetching screenings:", error);
+      }
+    };
+
     fetchTicketTypes();
-  }, []);
+    fetchScreenings();
+  }, [movieId]);
 
   return (
     <div>
@@ -44,6 +59,14 @@ const Bookmovie = () => {
         {ticketTypes.map((type) => (
           <li key={type.id}>
             {type.name} - {type.price}Kr
+          </li>
+        ))}
+      </ul>
+      <h2>Screenings:</h2>
+      <ul>
+        {screenings.map((screening) => (
+          <li key={screening.id}>
+            {new Date(screening.time).toLocaleString()}
           </li>
         ))}
       </ul>
