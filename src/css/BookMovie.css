@@ -1,7 +1,7 @@
 .Movie-screening-card {
     max-width: 800px;
-    margin: 20px;
     padding: 20px;
+    margin: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px
 }
@@ -9,6 +9,7 @@
 .Movie-info-card {
     border: none;
     text-align: center;
+    justify-content: center;
     align-items: center;
 }
   
@@ -36,7 +37,6 @@
 }
 
 .screening-col {
-    padding: 20px;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -44,7 +44,7 @@
 }
 
 .screening-col h2 {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     color: #3f3e3e;
 }
 

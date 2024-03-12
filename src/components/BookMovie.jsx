@@ -73,7 +73,7 @@ const Bookmovie = () => {
     <div className="d-flex justify-content-center align-items-center">
       <Card className="Movie-screening-card">
         <Row>
-          <Col md={6}>
+          <Col>
             <Card className="Movie-info-card">
               <Card.Img
                 variant="top"
@@ -101,12 +101,13 @@ const Bookmovie = () => {
           <Col className="screening-col" md={6}>
             <h2>Screenings:</h2>
             {screenings.map((screening) => (
-              <Card key={screening.id} className="mb-3">
+              <Card key={screening.id} className="mb-2">
                 <Card.Body>
                   <Row className="d-flex align-items-center">
                     <Col md={8}>
                       <p>
-                        {formatDateTime(screening.time)} -{" "}
+                        {formatDateTime(screening.time).split(" ")[0]} <br />
+                        {formatDateTime(screening.time).split(" ")[1]} <br />
                         {getAuditoriumName(screening.auditoriumId)}
                       </p>
                     </Col>
