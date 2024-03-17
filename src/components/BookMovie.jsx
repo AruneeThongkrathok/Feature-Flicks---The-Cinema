@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import "../css/BookMovie.css";
 
 const Bookmovie = () => {
   const { movieId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { movieDetails } = location.state || {};
   const { id, title, description, selectedCategory } = movieDetails || {};
@@ -54,6 +55,7 @@ const Bookmovie = () => {
   const handleChooseSeats = (screening) => {
     console.log("Choose seats for screening:", screening);
     setSelectedScreening(screening);
+    navigate(`/chooseSeats/${screening.id}`);
   };
 
   const formatDateTime = (dateTime) => {
