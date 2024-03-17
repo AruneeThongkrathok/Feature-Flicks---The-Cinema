@@ -6,6 +6,7 @@ export default function ChooseSeat({ screeningId }) {
   const [seats, setSeats] = useState([]);
   const location = useLocation();
   const { screening, auditorium } = location.state || {};
+  const [occupiedSeats, setOccupiedSeats] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +18,18 @@ export default function ChooseSeat({ screeningId }) {
           (seat) => seat.auditoriumId === screening.auditoriumId
         );
 
+        const occupiedResponse = await fetch(`/api/occupied_seats`);
+        const occupiedData = await occupiedResponse.json();
+        const occupiedSeatsForScreening = occupiedData.find(
+          (occupied) => occupied.screeningId === screening.id
+        );
+
         setSeats(filteredSeats);
+        setOccupiedSeats(
+          occupiedSeatsForScreening
+            ? occupiedSeatsForScreening.occupiedSeats.split(", ")
+            : []
+        );
       } catch (error) {
         console.error("Error fetching seat data:", error);
       }
@@ -51,10 +63,18 @@ export default function ChooseSeat({ screeningId }) {
             {seatsByRow[rowNumber].map((seat) => (
               <div
                 key={seat.id}
-                className={`seat ${seat.occupied ? "occupied" : ""}`}
+                className={`seat ${
+                  seat.occupied ||
+                  occupiedSeats.includes(seat.seatNumber.toString())
+                    ? "occupied"
+                    : ""
+                }`}
                 onClick={() => handleSeatClick(seat)}
               >
-                {seat.seatNumber}
+                {seat.occupied ||
+                occupiedSeats.includes(seat.seatNumber.toString())
+                  ? "X"
+                  : seat.seatNumber}
               </div>
             ))}
           </div>
