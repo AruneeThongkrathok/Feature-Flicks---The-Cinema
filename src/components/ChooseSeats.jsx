@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../css/ChooseSeats.css";
+import { Card, Row } from "react-bootstrap";
 
 export default function ChooseSeat({ screeningId }) {
   const [seats, setSeats] = useState([]);
@@ -55,11 +56,11 @@ export default function ChooseSeat({ screeningId }) {
   };
 
   return (
-    <div className="seats-container">
-      <div className="auditorium-seats">
-        <h2>{auditorium}</h2>
+    <Card className="seats-container">
+      <Card.Title>{auditorium}</Card.Title>
+      <Card className="auditorium-seats">
         {Object.keys(seatsByRow).map((rowNumber) => (
-          <div key={rowNumber} className="seat-row">
+          <Row key={rowNumber} className="seat-row">
             {seatsByRow[rowNumber].map((seat) => (
               <div
                 key={seat.id}
@@ -77,9 +78,9 @@ export default function ChooseSeat({ screeningId }) {
                   : seat.seatNumber}
               </div>
             ))}
-          </div>
+          </Row>
         ))}
-      </div>
-    </div>
+      </Card>
+    </Card>
   );
 }
