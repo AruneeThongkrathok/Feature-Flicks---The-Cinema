@@ -10,6 +10,7 @@ export default function ChooseSeat() {
   const { screening, auditorium, movieImage, movieTitle, screeningTime } =
     location.state || {};
   const [occupiedSeats, setOccupiedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const [ticketCounts, setTicketCounts] = useState({
     child: 0,
     senior: 0,
@@ -56,10 +57,31 @@ export default function ChooseSeat() {
 
   const handleSeatClick = (seat) => {
     if (!seat.occupied && !occupiedSeats.includes(seat.seatNumber.toString())) {
-      console.log(`Seat ${seat.seatNumber} selected!`);
+      const totalTicketsSelected = Object.values(ticketCounts).reduce(
+        (acc, count) => acc + count,
+        0
+      );
+
+      if (selectedSeats.length < totalTicketsSelected) {
+        setSelectedSeats((prevSelectedSeats) => [...prevSelectedSeats, seat]);
+      } else {
+        console.log("You've already selected the maximum number of seats.");
+      }
     } else {
       console.log(`Seat ${seat.seatNumber} is already occupied.`);
     }
+  };
+
+  const handleTicketSelection = (ticketCounts) => {
+    setTicketCounts(ticketCounts);
+    console.log("Selected Ticket Counts:", ticketCounts);
+    const totalTicketsChosen = Object.values(ticketCounts).reduce(
+      (acc, count) => acc + count,
+      0
+    );
+    setSelectedSeats((prevSelectedSeats) =>
+      prevSelectedSeats.slice(0, totalTicketsChosen)
+    );
   };
 
   return (
@@ -74,9 +96,9 @@ export default function ChooseSeat() {
           />
           <Card.Title className="movies-title">{movieTitle}</Card.Title>
           <Card.Text className="screening-time-text">{screeningTime}</Card.Text>
-          <TicketDropdown setTicketCounts={setTicketCounts} />
         </Card>
         <Card className="seats-container">
+          <TicketDropdown handleTicketSelection={handleTicketSelection} />
           <Card className="auditorium-seats">
             {Object.keys(seatsByRow).map((rowNumber) => (
               <Row key={rowNumber} className="seat-row">
@@ -87,6 +109,10 @@ export default function ChooseSeat() {
                       seat.occupied ||
                       occupiedSeats.includes(seat.seatNumber.toString())
                         ? "occupied"
+                        : selectedSeats.some(
+                            (selectedSeat) => selectedSeat.id === seat.id
+                          )
+                        ? "selected"
                         : ""
                     }`}
                     onClick={() => handleSeatClick(seat)}

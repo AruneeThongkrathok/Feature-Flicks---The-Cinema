@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-function TicketDropdown() {
+function TicketDropdown({ handleTicketSelection }) {
   const [ticketTypes, setTicketTypes] = useState([]);
   const [ticketCounts, setTicketCounts] = useState({});
 
@@ -20,10 +20,13 @@ function TicketDropdown() {
   }, []);
 
   const handleSelect = (type, count) => {
-    setTicketCounts((prevCounts) => ({
-      ...prevCounts,
+    const updatedCounts = {
+      ...ticketCounts,
       [type.name.toLowerCase()]: count,
-    }));
+    };
+    setTicketCounts(updatedCounts);
+    console.log("Ticketdropdown Ticket Counts:", updatedCounts);
+    handleTicketSelection(updatedCounts);
   };
 
   return (
