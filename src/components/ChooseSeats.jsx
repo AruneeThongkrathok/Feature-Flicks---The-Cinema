@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../css/ChooseSeats.css";
-import { Card, Col, Row, Image } from "react-bootstrap";
+import { Card, Col, Row, Image, Button } from "react-bootstrap";
 import TicketDropdown from "./TicketDropdown";
 
 export default function ChooseSeat() {
@@ -16,6 +16,8 @@ export default function ChooseSeat() {
     senior: 0,
     adult: 0,
   });
+  const navigate = useNavigate();
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,8 +84,9 @@ export default function ChooseSeat() {
     }
   };
 
-  const handleTicketSelection = (ticketCounts) => {
+  const handleTicketSelection = (ticketCounts, totalPrice) => {
     setTicketCounts(ticketCounts);
+    setTotalPrice(totalPrice);
     console.log("Selected Ticket Counts:", ticketCounts);
     const totalTicketsChosen = Object.values(ticketCounts).reduce(
       (acc, count) => acc + count,
@@ -92,6 +95,17 @@ export default function ChooseSeat() {
     setSelectedSeats((prevSelectedSeats) =>
       prevSelectedSeats.slice(0, totalTicketsChosen)
     );
+  };
+
+  const handleBook = () => {
+    navigate("/Receipt", {
+      state: {
+        movieTitle: movieTitle,
+        screeningTime: screeningTime,
+        selectedSeats: selectedSeats,
+        totalPrice: totalPrice,
+      },
+    });
   };
 
   return (
@@ -136,6 +150,9 @@ export default function ChooseSeat() {
               </Row>
             ))}
           </Card>
+          <Button variant="secondary" onClick={handleBook}>
+            BOOK
+          </Button>
         </Card>
       </Row>
     </Card>

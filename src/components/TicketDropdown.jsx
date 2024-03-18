@@ -28,7 +28,7 @@ function TicketDropdown({ handleTicketSelection }) {
     };
     setTicketCounts(updatedCounts);
     calculateTotalPrice(updatedCounts);
-    handleTicketSelection(updatedCounts);
+    handleTicketSelection(updatedCounts, totalPrice);
   };
 
   const calculateTotalPrice = (ticketCounts) => {
