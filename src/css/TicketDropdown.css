@@ -1,5 +1,17 @@
 .ticket-dropdown-button {
     margin-right: 10px;
-    margin-bottom: 45px;
+    margin-bottom: 20px;
     font-size: 12px;
+}
+
+.ticket-dropdown-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.total-price{
+    padding-bottom: 30px;
+    font-size: 18px;
+    color: #ffffff;
 }
