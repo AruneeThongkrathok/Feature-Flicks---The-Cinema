@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../css/ChooseSeats.css";
-import { Card, Row } from "react-bootstrap";
+import { Card, Col, Row, Image } from "react-bootstrap";
 
-export default function ChooseSeat({ screeningId }) {
+export default function ChooseSeat() {
   const [seats, setSeats] = useState([]);
   const location = useLocation();
-  const { screening, auditorium } = location.state || {};
+  const { screening, auditorium, movieImage, movieTitle, screeningTime } =
+    location.state || {};
   const [occupiedSeats, setOccupiedSeats] = useState([]);
 
   useEffect(() => {
@@ -56,31 +57,44 @@ export default function ChooseSeat({ screeningId }) {
   };
 
   return (
-    <Card className="seats-container">
-      <Card.Title>{auditorium}</Card.Title>
-      <Card className="auditorium-seats">
-        {Object.keys(seatsByRow).map((rowNumber) => (
-          <Row key={rowNumber} className="seat-row">
-            {seatsByRow[rowNumber].map((seat) => (
-              <div
-                key={seat.id}
-                className={`seat ${
-                  seat.occupied ||
-                  occupiedSeats.includes(seat.seatNumber.toString())
-                    ? "occupied"
-                    : ""
-                }`}
-                onClick={() => handleSeatClick(seat)}
-              >
-                {seat.occupied ||
-                occupiedSeats.includes(seat.seatNumber.toString())
-                  ? "X"
-                  : seat.seatNumber}
-              </div>
+    <Card className="choose-seat-container">
+      <Card.Title className="auditorium-title">{auditorium}</Card.Title>
+      <Row className="choose-seat-row">
+        <Card className="movie-info">
+          <Image
+            src={`https://cinema-rest.nodehill.se/${movieImage}`}
+            alt={movieTitle}
+            className="movie-image"
+          />
+          <Card.Title className="movie-title">{movieTitle}</Card.Title>
+          <Card.Text className="screening-time-text">{screeningTime}</Card.Text>
+        </Card>
+        <Card className="seats-container">
+          <Card className="auditorium-seats">
+            {Object.keys(seatsByRow).map((rowNumber) => (
+              <Row key={rowNumber} className="seat-row">
+                {seatsByRow[rowNumber].map((seat) => (
+                  <div
+                    key={seat.id}
+                    className={`seat ${
+                      seat.occupied ||
+                      occupiedSeats.includes(seat.seatNumber.toString())
+                        ? "occupied"
+                        : ""
+                    }`}
+                    onClick={() => handleSeatClick(seat)}
+                  >
+                    {seat.occupied ||
+                    occupiedSeats.includes(seat.seatNumber.toString())
+                      ? "X"
+                      : seat.seatNumber}
+                  </div>
+                ))}
+              </Row>
             ))}
-          </Row>
-        ))}
-      </Card>
+          </Card>
+        </Card>
+      </Row>
     </Card>
   );
 }

@@ -56,8 +56,15 @@ const Bookmovie = () => {
     console.log("Choose seats for screening:", screening);
     setSelectedScreening(screening);
     const auditorium = getAuditoriumName(screening.auditoriumId);
+    const screeningTime = formatDateTime(screening.time);
     navigate(`/chooseSeats/${screening.id}`, {
-      state: { screening, auditorium },
+      state: {
+        screening,
+        auditorium,
+        movieImage: posterImage,
+        movieTitle: title,
+        screeningTime: screeningTime,
+      },
     });
   };
 
