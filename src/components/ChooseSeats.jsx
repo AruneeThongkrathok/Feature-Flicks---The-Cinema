@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../css/ChooseSeats.css";
 import { Card, Col, Row, Image } from "react-bootstrap";
+import TicketDropdown from "./TicketDropdown";
 
 export default function ChooseSeat() {
   const [seats, setSeats] = useState([]);
@@ -9,6 +10,11 @@ export default function ChooseSeat() {
   const { screening, auditorium, movieImage, movieTitle, screeningTime } =
     location.state || {};
   const [occupiedSeats, setOccupiedSeats] = useState([]);
+  const [ticketCounts, setTicketCounts] = useState({
+    child: 0,
+    senior: 0,
+    adult: 0,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +55,7 @@ export default function ChooseSeat() {
   }, {});
 
   const handleSeatClick = (seat) => {
-    if (!seat.occupied) {
+    if (!seat.occupied && !occupiedSeats.includes(seat.seatNumber.toString())) {
       console.log(`Seat ${seat.seatNumber} selected!`);
     } else {
       console.log(`Seat ${seat.seatNumber} is already occupied.`);
@@ -66,8 +72,9 @@ export default function ChooseSeat() {
             alt={movieTitle}
             className="movie-image"
           />
-          <Card.Title className="movie-title">{movieTitle}</Card.Title>
+          <Card.Title className="movies-title">{movieTitle}</Card.Title>
           <Card.Text className="screening-time-text">{screeningTime}</Card.Text>
+          <TicketDropdown setTicketCounts={setTicketCounts} />
         </Card>
         <Card className="seats-container">
           <Card className="auditorium-seats">
