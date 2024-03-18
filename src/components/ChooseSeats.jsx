@@ -57,15 +57,25 @@ export default function ChooseSeat() {
 
   const handleSeatClick = (seat) => {
     if (!seat.occupied && !occupiedSeats.includes(seat.seatNumber.toString())) {
-      const totalTicketsSelected = Object.values(ticketCounts).reduce(
-        (acc, count) => acc + count,
-        0
+      const isSelected = selectedSeats.some(
+        (selectedSeat) => selectedSeat.id === seat.id
       );
-
-      if (selectedSeats.length < totalTicketsSelected) {
-        setSelectedSeats((prevSelectedSeats) => [...prevSelectedSeats, seat]);
+      if (isSelected) {
+        setSelectedSeats((prevSelectedSeats) =>
+          prevSelectedSeats.filter(
+            (selectedSeat) => selectedSeat.id !== seat.id
+          )
+        );
       } else {
-        console.log("You've already selected the maximum number of seats.");
+        const totalTicketsSelected = Object.values(ticketCounts).reduce(
+          (acc, count) => acc + count,
+          0
+        );
+        if (selectedSeats.length < totalTicketsSelected) {
+          setSelectedSeats((prevSelectedSeats) => [...prevSelectedSeats, seat]);
+        } else {
+          console.log("The maximum number of seats is reached.");
+        }
       }
     } else {
       console.log(`Seat ${seat.seatNumber} is already occupied.`);

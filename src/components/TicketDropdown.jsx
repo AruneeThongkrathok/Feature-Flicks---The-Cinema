@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown, DropdownButton, Row } from "react-bootstrap";
+import "../css/TicketDropdown.css";
 
 function TicketDropdown({ handleTicketSelection }) {
   const [ticketTypes, setTicketTypes] = useState([]);
@@ -30,11 +31,13 @@ function TicketDropdown({ handleTicketSelection }) {
   };
 
   return (
-    <div>
+    <Row className="ticket-dropdow-row">
       {ticketTypes.map((type) => {
         const selectedCount = ticketCounts[type.name.toLowerCase()] || 0;
         return (
           <DropdownButton
+            variant="secondary"
+            className="ticket-dropdown-button"
             key={type.id}
             id={`${type.name.toLowerCase()}-dropdown`}
             title={`${type.name} (${selectedCount}) - $${type.price}`}
@@ -50,7 +53,7 @@ function TicketDropdown({ handleTicketSelection }) {
           </DropdownButton>
         );
       })}
-    </div>
+    </Row>
   );
 }
 
