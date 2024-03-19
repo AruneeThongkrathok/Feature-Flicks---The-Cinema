@@ -11,7 +11,8 @@ function Receipt() {
     <Card>
       <Card.Body>
         <Card.Title>Booking Receipt</Card.Title>
-        <Card.Text>
+        <div>
+          {" "}
           {movieTitle && <div>Movie Title: {movieTitle}</div>}
           {screeningTime && <div>Screening Time: {screeningTime}</div>}
           {selectedSeats && (
@@ -25,7 +26,7 @@ function Receipt() {
             </div>
           )}
           <div>Total Price: {totalPrice}Kr</div>
-        </Card.Text>
+        </div>
       </Card.Body>
     </Card>
   );

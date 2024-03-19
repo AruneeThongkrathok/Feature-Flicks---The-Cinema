@@ -87,7 +87,6 @@ export default function ChooseSeat() {
   const handleTicketSelection = (ticketCounts, totalPrice) => {
     setTicketCounts(ticketCounts);
     setTotalPrice(totalPrice);
-    console.log("Selected Ticket Counts:", ticketCounts);
     const totalTicketsChosen = Object.values(ticketCounts).reduce(
       (acc, count) => acc + count,
       0
@@ -98,6 +97,7 @@ export default function ChooseSeat() {
   };
 
   const handleBook = () => {
+    console.log("Total Price:", totalPrice);
     navigate("/Receipt", {
       state: {
         movieTitle: movieTitle,
@@ -150,7 +150,11 @@ export default function ChooseSeat() {
               </Row>
             ))}
           </Card>
-          <Button variant="secondary" onClick={handleBook}>
+          <Button
+            className="choose-seats-book-button"
+            variant="secondary"
+            onClick={handleBook}
+          >
             BOOK
           </Button>
         </Card>
