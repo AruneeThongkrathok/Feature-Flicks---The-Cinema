@@ -2,11 +2,14 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import "../css/Receipt.css";
+import generateBookingNumber from "./GenerateBookingNumber";
 
 function Receipt() {
   const location = useLocation();
   const { movieTitle, screeningTime, selectedSeats, totalPrice } =
     location.state || {};
+
+  const bookingNumber = generateBookingNumber();
 
   return (
     <div className="receipt-container">
@@ -41,6 +44,10 @@ function Receipt() {
             )}
             <div className="receipt-total-price">
               <strong>Total Price:</strong> {totalPrice}Kr
+            </div>
+            <div className="receipt-booking-number">
+              {" "}
+              <strong>Booking Number:</strong> {bookingNumber}
             </div>
             <div className="receipt-payment-info">
               Note: Payment required at cinema counter before entry to
