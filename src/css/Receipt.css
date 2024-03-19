@@ -1,0 +1,56 @@
+.receipt-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+  
+.receipt-card {
+    width: 500px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+.receipt-card-body {
+    padding: 40px;
+    text-align: center;
+}
+  
+.receipt-title {
+    font-size: 30px;
+    margin-bottom: 15px;
+    font-family: 'Franklin Gothic Medium';
+    font-weight: bold;
+}
+  
+.receipt-info div {
+    margin-bottom: 10px;
+    font-family: 'Franklin Gothic Medium';
+}
+  
+.receipt-info div:last-child {
+    margin-bottom: 0;
+}
+
+.receipt-booking-details{
+    padding-top: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium';
+}
+
+.receipt-payment-info{
+    padding-top: 25px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium';
+    color: red;
+}
+
+.receipt-greeting-text{
+    font-size: 20px;
+    padding-top: 25px;
+    font-family: 'Franklin Gothic Medium';
+}
+  
