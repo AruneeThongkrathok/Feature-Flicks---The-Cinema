@@ -5,6 +5,7 @@ import { Card, Col, Row, Image, Button } from "react-bootstrap";
 import TicketDropdown from "./TicketDropdown";
 import PopUpWindow from "./PopUpWindow";
 import Footer from "./Footer";
+import Header from "./Header";
 
 export default function ChooseSeat() {
   const [seats, setSeats] = useState([]);
@@ -117,6 +118,7 @@ export default function ChooseSeat() {
 
   return (
     <div>
+      <Header />
       <Card className="choose-seat-container">
         <Card.Title className="auditorium-title">{auditorium}</Card.Title>
         <Row className="choose-seat-row">

@@ -3,6 +3,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import "../css/BookMovie.css";
 import Footer from "./Footer";
+import Header from "./Header";
 
 const Bookmovie = () => {
   const { movieId } = useParams();
@@ -84,6 +85,7 @@ const Bookmovie = () => {
 
   return (
     <div>
+      <Header />
       <div className="d-flex justify-content-center align-items-center">
         <Card className="Movie-screening-card">
           <Row>

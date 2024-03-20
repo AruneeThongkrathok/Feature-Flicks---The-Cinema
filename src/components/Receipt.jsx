@@ -4,6 +4,7 @@ import { Card } from "react-bootstrap";
 import "../css/Receipt.css";
 import generateBookingNumber from "./GenerateBookingNumber";
 import Footer from "./Footer";
+import Header from "./Header";
 
 function Receipt() {
   const location = useLocation();
@@ -14,6 +15,7 @@ function Receipt() {
 
   return (
     <div>
+      <Header />
       <div className="receipt-container">
         <Card className="receipt-card">
           <Card.Body className="receipt-card-body">
@@ -53,8 +55,8 @@ function Receipt() {
                 <strong>Booking Number:</strong> {bookingNumber}
               </div>
               <div className="receipt-payment-info">
-                Note: Payment required at cinema counter before entry to
-                auditorium.
+                Note: Please save your booking number. Payment required at
+                cinema counter before entry to auditorium.
               </div>
               <div className="receipt-greeting-text">
                 We hope to see you again soon!
