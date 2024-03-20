@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../css/ChooseSeats.css";
 import { Card, Col, Row, Image, Button } from "react-bootstrap";
 import TicketDropdown from "./TicketDropdown";
+import PopUpWindow from "./PopUpWindow";
 
 export default function ChooseSeat() {
   const [seats, setSeats] = useState([]);
@@ -18,6 +19,7 @@ export default function ChooseSeat() {
   });
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,15 +99,19 @@ export default function ChooseSeat() {
   };
 
   const handleBook = () => {
-    console.log("Total Price:", totalPrice);
-    navigate("/Receipt", {
-      state: {
-        movieTitle: movieTitle,
-        screeningTime: screeningTime,
-        selectedSeats: selectedSeats,
-        totalPrice: totalPrice,
-      },
-    });
+    if (selectedSeats.length === 0) {
+      setShowPopup(true);
+    } else {
+      console.log("Total Price:", totalPrice);
+      navigate("/Receipt", {
+        state: {
+          movieTitle: movieTitle,
+          screeningTime: screeningTime,
+          selectedSeats: selectedSeats,
+          totalPrice: totalPrice,
+        },
+      });
+    }
   };
 
   return (
@@ -159,6 +165,7 @@ export default function ChooseSeat() {
           </Button>
         </Card>
       </Row>
+      <PopUpWindow show={showPopup} onClose={() => setShowPopup(false)} />
     </Card>
   );
 }
