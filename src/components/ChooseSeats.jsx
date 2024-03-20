@@ -4,6 +4,7 @@ import "../css/ChooseSeats.css";
 import { Card, Col, Row, Image, Button } from "react-bootstrap";
 import TicketDropdown from "./TicketDropdown";
 import PopUpWindow from "./PopUpWindow";
+import Footer from "./Footer";
 
 export default function ChooseSeat() {
   const [seats, setSeats] = useState([]);
@@ -115,57 +116,62 @@ export default function ChooseSeat() {
   };
 
   return (
-    <Card className="choose-seat-container">
-      <Card.Title className="auditorium-title">{auditorium}</Card.Title>
-      <Row className="choose-seat-row">
-        <Card className="movie-info">
-          <Image
-            src={`https://cinema-rest.nodehill.se/${movieImage}`}
-            alt={movieTitle}
-            className="movie-image"
-          />
-          <Card.Title className="movies-title">{movieTitle}</Card.Title>
-          <Card.Text className="screening-time-text">{screeningTime}</Card.Text>
-        </Card>
-        <Card className="seats-container">
-          <TicketDropdown handleTicketSelection={handleTicketSelection} />
-          <Card className="auditorium-seats">
-            {Object.keys(seatsByRow).map((rowNumber) => (
-              <Row key={rowNumber} className="seat-row">
-                {seatsByRow[rowNumber].map((seat) => (
-                  <div
-                    key={seat.id}
-                    className={`seat ${
-                      seat.occupied ||
-                      occupiedSeats.includes(seat.seatNumber.toString())
-                        ? "occupied"
-                        : selectedSeats.some(
-                            (selectedSeat) => selectedSeat.id === seat.id
-                          )
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() => handleSeatClick(seat)}
-                  >
-                    {seat.occupied ||
-                    occupiedSeats.includes(seat.seatNumber.toString())
-                      ? "X"
-                      : seat.seatNumber}
-                  </div>
-                ))}
-              </Row>
-            ))}
+    <div>
+      <Card className="choose-seat-container">
+        <Card.Title className="auditorium-title">{auditorium}</Card.Title>
+        <Row className="choose-seat-row">
+          <Card className="movie-info">
+            <Image
+              src={`https://cinema-rest.nodehill.se/${movieImage}`}
+              alt={movieTitle}
+              className="movie-image"
+            />
+            <Card.Title className="movies-title">{movieTitle}</Card.Title>
+            <Card.Text className="screening-time-text">
+              {screeningTime}
+            </Card.Text>
           </Card>
-          <Button
-            className="choose-seats-book-button"
-            variant="secondary"
-            onClick={handleBook}
-          >
-            BOOK
-          </Button>
-        </Card>
-      </Row>
-      <PopUpWindow show={showPopup} onClose={() => setShowPopup(false)} />
-    </Card>
+          <Card className="seats-container">
+            <TicketDropdown handleTicketSelection={handleTicketSelection} />
+            <Card className="auditorium-seats">
+              {Object.keys(seatsByRow).map((rowNumber) => (
+                <Row key={rowNumber} className="seat-row">
+                  {seatsByRow[rowNumber].map((seat) => (
+                    <div
+                      key={seat.id}
+                      className={`seat ${
+                        seat.occupied ||
+                        occupiedSeats.includes(seat.seatNumber.toString())
+                          ? "occupied"
+                          : selectedSeats.some(
+                              (selectedSeat) => selectedSeat.id === seat.id
+                            )
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() => handleSeatClick(seat)}
+                    >
+                      {seat.occupied ||
+                      occupiedSeats.includes(seat.seatNumber.toString())
+                        ? "X"
+                        : seat.seatNumber}
+                    </div>
+                  ))}
+                </Row>
+              ))}
+            </Card>
+            <Button
+              className="choose-seats-book-button"
+              variant="secondary"
+              onClick={handleBook}
+            >
+              BOOK
+            </Button>
+          </Card>
+        </Row>
+        <PopUpWindow show={showPopup} onClose={() => setShowPopup(false)} />
+      </Card>
+      <Footer />
+    </div>
   );
 }

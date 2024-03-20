@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import "../css/BookMovie.css";
+import Footer from "./Footer";
 
 const Bookmovie = () => {
   const { movieId } = useParams();
@@ -82,63 +83,66 @@ const Bookmovie = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <Card className="Movie-screening-card">
-        <Row>
-          <Col>
-            <Card className="Movie-info-card">
-              <Card.Img
-                variant="top"
-                src={`https://cinema-rest.nodehill.se/${posterImage}`}
-              />
-              <Card.Body>
-                <Card.Title>{title}</Card.Title>
-                <Card.Text>
-                  {Array.isArray(categories)
-                    ? categories.map((category, index) => (
-                        <span key={index}>{category.trim()}</span>
-                      ))
-                    : typeof categories === "string"
-                    ? categories
-                        .split(",")
-                        .map((category, index) => (
+    <div>
+      <div className="d-flex justify-content-center align-items-center">
+        <Card className="Movie-screening-card">
+          <Row>
+            <Col>
+              <Card className="Movie-info-card">
+                <Card.Img
+                  variant="top"
+                  src={`https://cinema-rest.nodehill.se/${posterImage}`}
+                />
+                <Card.Body>
+                  <Card.Title>{title}</Card.Title>
+                  <Card.Text>
+                    {Array.isArray(categories)
+                      ? categories.map((category, index) => (
                           <span key={index}>{category.trim()}</span>
                         ))
-                    : null}
-                </Card.Text>
-                <Card.Text>Duration: {length} minutes</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col className="screening-col" md={6}>
-            <h2>Screenings:</h2>
-            {screenings.map((screening) => (
-              <Card key={screening.id} className="mb-2">
-                <Card.Body>
-                  <Row className="d-flex align-items-center">
-                    <Col md={8}>
-                      <p>
-                        {formatDateTime(screening.time).split(" ")[0]} <br />
-                        {formatDateTime(screening.time).split(" ")[1]} <br />
-                        {getAuditoriumName(screening.auditoriumId)}
-                      </p>
-                    </Col>
-                    <Col md={4} className="text-md-right">
-                      <Button
-                        className="book-button"
-                        variant="primary"
-                        onClick={() => handleChooseSeats(screening)}
-                      >
-                        Book
-                      </Button>
-                    </Col>
-                  </Row>
+                      : typeof categories === "string"
+                      ? categories
+                          .split(",")
+                          .map((category, index) => (
+                            <span key={index}>{category.trim()}</span>
+                          ))
+                      : null}
+                  </Card.Text>
+                  <Card.Text>Duration: {length} minutes</Card.Text>
                 </Card.Body>
               </Card>
-            ))}
-          </Col>
-        </Row>
-      </Card>
+            </Col>
+            <Col className="screening-col" md={6}>
+              <h2>Screenings:</h2>
+              {screenings.map((screening) => (
+                <Card key={screening.id} className="mb-2">
+                  <Card.Body>
+                    <Row className="d-flex align-items-center">
+                      <Col md={8}>
+                        <p>
+                          {formatDateTime(screening.time).split(" ")[0]} <br />
+                          {formatDateTime(screening.time).split(" ")[1]} <br />
+                          {getAuditoriumName(screening.auditoriumId)}
+                        </p>
+                      </Col>
+                      <Col md={4} className="text-md-right">
+                        <Button
+                          className="book-button"
+                          variant="primary"
+                          onClick={() => handleChooseSeats(screening)}
+                        >
+                          Book
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                </Card>
+              ))}
+            </Col>
+          </Row>
+        </Card>
+      </div>
+      <Footer />
     </div>
   );
 };

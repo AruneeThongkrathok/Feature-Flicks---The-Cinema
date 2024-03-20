@@ -65,7 +65,7 @@ Feature Flicks The-Cinema is a web application focuses on the frontend part of t
 
 ### ChooseSeats Component:
 
-- Facilitates the seat selection process for booking.
+- Provides the seat selection process for booking.
 - Retrieves seat information and occupancy status from APIs.
 - Displays available seats in the auditorium layout, allowing users to select seats.
 - Provides options to choose the number of tickets for different age groups and calculates the total price.

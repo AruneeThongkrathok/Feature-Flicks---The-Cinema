@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MyNavbar from "./components/MyNavbar";
 import Movie from "./components/Movie";
+import Footer from "./components/Footer";
 
 export default function App() {
   const [allMovies, setAllMovies] = useState([]);
@@ -62,6 +63,7 @@ export default function App() {
           />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

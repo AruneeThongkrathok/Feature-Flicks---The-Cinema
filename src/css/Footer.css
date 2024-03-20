@@ -1,0 +1,22 @@
+.footer {
+    background-color: #2d2c2c;
+    color: #fff; 
+    padding: 20px; 
+    text-align: center; 
+}
+  
+.footer-content {
+    max-width: 800px; 
+    margin: 0 auto; 
+    font-size: 14px; 
+    line-height: 1.5; 
+}
+  
+.footer-content strong {
+    font-weight: bold; 
+}
+  
+.footer-content div {
+    margin-bottom: 5px; 
+}
+  
