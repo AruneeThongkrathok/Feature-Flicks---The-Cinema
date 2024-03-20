@@ -80,3 +80,13 @@ Feature Flicks The-Cinema is a web application focuses on the frontend part of t
 - Represents a movie card displayed in the movie list.
 - Displays movie title, poster image, categories, and length.
 - Allows users to click on the movie card to view details and book tickets.
+
+### Footer Component:
+
+- Represents a footer of the application.
+- Displays email, phone number and address.
+
+### Header Component:
+
+- Represents a header of the application.
+- Displays the name of Cinema.

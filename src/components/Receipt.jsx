@@ -27,17 +27,17 @@ function Receipt() {
             </Card.Text>
             <div className="receipt-info">
               {movieTitle && (
-                <div>
+                <Card.Text>
                   <strong>Movie Title:</strong> {movieTitle}
-                </div>
+                </Card.Text>
               )}
               {screeningTime && (
-                <div>
+                <Card.Text>
                   <strong>Screening Time:</strong> {screeningTime}
-                </div>
+                </Card.Text>
               )}
               {selectedSeats && (
-                <div>
+                <Card.Text>
                   <strong>Selected Seats:</strong>{" "}
                   {selectedSeats
                     .map(
@@ -45,23 +45,25 @@ function Receipt() {
                         `Row: ${seat.rowNumber} Seat: ${seat.seatNumber}`
                     )
                     .join(", ")}
-                </div>
+                </Card.Text>
               )}
-              <div className="receipt-total-price">
+              <Card.Text className="receipt-total-price">
                 <strong>Total Price:</strong> {totalPrice}Kr
-              </div>
-              <div className="receipt-booking-number">
+              </Card.Text>
+              <Card.Text className="receipt-booking-number">
                 {" "}
                 <strong>Booking Number:</strong> {bookingNumber}
-              </div>
-              <div className="receipt-payment-info">
+              </Card.Text>
+              <Card.Text className="receipt-payment-info">
                 Note: Please save your booking number. Payment required at
                 cinema counter before entry to auditorium.
-              </div>
-              <div className="receipt-greeting-text">
+              </Card.Text>
+              <Card.Text className="receipt-greeting-text">
                 We hope to see you again soon!
-              </div>
-              <div className="receipt-greeting-text">Future Flicks Cinema</div>
+              </Card.Text>
+              <Card.Text className="receipt-greeting-text">
+                Future Flicks Cinema
+              </Card.Text>
             </div>
           </Card.Body>
         </Card>

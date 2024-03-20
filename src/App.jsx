@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MyNavbar from "./components/MyNavbar";
 import Movie from "./components/Movie";
 import Footer from "./components/Footer";
+import { Row, Col } from "react-bootstrap";
 
 export default function App() {
   const [allMovies, setAllMovies] = useState([]);
@@ -52,17 +53,18 @@ export default function App() {
         onSortChange={setSelectedSorting}
         selectedSorting={selectedSorting}
       />
-      <div className="movie-list">
+      <Row className="Movie-row">
         {displayedMovies.map((movie) => (
-          <Movie
-            key={movie.id}
-            id={movie.id}
-            title={movie.title}
-            description={movie.description}
-            selectedCategory={selectedCategory}
-          />
+          <Col key={movie.id} sm={6} md={4} lg={3}>
+            <Movie
+              id={movie.id}
+              title={movie.title}
+              description={movie.description}
+              selectedCategory={selectedCategory}
+            />
+          </Col>
         ))}
-      </div>
+      </Row>
       <Footer />
     </div>
   );
